@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FarmDirect</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-screen">
+  <div class="loader-logo">FarmDirect</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-text">Empowering Sri Lankan Farmers...</div>
+</div>
+
+<div id="scroll-progress"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-inner">
+    <i class="fas fa-check-circle toast-icon"></i>
+    <span class="toast-text" id="toast-text">Done!</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showPage('home');return false;">
+      <i class="fas fa-seedling nav-logo-icon"></i>Farm<span>Direct</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home');return false;" class="nav-link active" data-page="home">Home</a></li>
+      <li><a href="#" onclick="showPage('marketplace');return false;" class="nav-link" data-page="marketplace">Marketplace</a></li>
+      <li><a href="#" onclick="showPage('analytics');return false;" class="nav-link" data-page="analytics">Analytics</a></li>
+      <li><a href="#" onclick="showPage('learning');return false;" class="nav-link" data-page="learning">Learning</a></li>
+      <li><a href="#" onclick="showPage('market');return false;" class="nav-link" data-page="market">Market Info</a></li>
+      <li><a href="#" onclick="showPage('quiz');return false;" class="nav-link" data-page="quiz">Quiz</a></li>
+      <li><a href="#" onclick="showPage('government');return false;" class="nav-link" data-page="government">Support</a></li>
+      <li><a href="#" onclick="showPage('contact');return false;" class="nav-link" data-page="contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="lang-btn" onclick="showToast('Language switcher coming soon!')"><i class="fas fa-globe"></i> EN</button>
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="theme-icon"></i></button>
+      <button class="btn-nav btn-nav-fill" onclick="showPage('marketplace')">Get Started</button>
+    </div>
+    <button id="hamburger" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div id="mobile-menu">
+  <a href="#" onclick="showPage('home');toggleMobile();return false;"><i class="fas fa-home"></i> Home</a>
+  <a href="#" onclick="showPage('marketplace');toggleMobile();return false;"><i class="fas fa-store"></i> Marketplace</a>
+  <a href="#" onclick="showPage('analytics');toggleMobile();return false;"><i class="fas fa-chart-bar"></i> Analytics</a>
+  <a href="#" onclick="showPage('learning');toggleMobile();return false;"><i class="fas fa-graduation-cap"></i> Learning</a>
+  <a href="#" onclick="showPage('market');toggleMobile();return false;"><i class="fas fa-chart-line"></i> Market Info</a>
+  <a href="#" onclick="showPage('quiz');toggleMobile();return false;"><i class="fas fa-clipboard-check"></i> Quiz</a>
+  <a href="#" onclick="showPage('government');toggleMobile();return false;"><i class="fas fa-landmark"></i> Support</a>
+  <a href="#" onclick="showPage('contact');toggleMobile();return false;"><i class="fas fa-phone"></i> Contact</a>
+</div>
+
+<!-- SVG DEFS -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#43A047"/><stop offset="100%" style="stop-color:#FBC02D"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#43A047"/><stop offset="100%" style="stop-color:#FBC02D"/>
+    </linearGradient>
+    <linearGradient id="resultGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#43A047"/><stop offset="100%" style="stop-color:#FBC02D"/>
+    </linearGradient>
+    <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#43A047;stop-opacity:0.45"/>
+      <stop offset="100%" style="stop-color:#43A047;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ======================================================
+     PAGE: HOME
+     ====================================================== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1600&q=80" alt="Sri Lankan farm" class="hero-img">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-grid"></div>
+    <canvas id="particles-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <i class="fas fa-flag" style="color:var(--gold);font-size:0.75rem"></i>
+        Sri Lanka's #1 Agricultural Platform
+      </div>
+      <h1 class="hero-title">
+        Empowering Farmers<br>
+        <span class="line2">Through Digital Transformation</span>
+      </h1>
+      <div class="hero-typing-wrap">
+        <span id="typing-text"></span><span class="cursor">|</span>
+      </div>
+      <p class="hero-subtitle">Connecting Sri Lankan farmers directly with buyers, eliminating middlemen, and ensuring fair prices through cutting-edge digital technology.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('marketplace')"><i class="fas fa-store"></i> Explore Marketplace</button>
+        <button class="btn-secondary" onclick="showPage('analytics')"><i class="fas fa-chart-bar"></i> View Research Insights</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat-card">
+          <i class="fas fa-chart-line stat-icon"></i>
+          <span class="hero-stat-num" data-target="83">0</span><span class="stat-unit">%</span>
+          <div class="hero-stat-label">Price Gap Eliminated</div>
+        </div>
+        <div class="hero-stat-card">
+          <i class="fas fa-coins stat-icon"></i>
+          <span class="hero-stat-num" data-target="93">0</span><span class="stat-unit">%</span>
+          <div class="hero-stat-label">Max Income Increase</div>
+        </div>
+        <div class="hero-stat-card">
+          <i class="fas fa-users stat-icon"></i>
+          <span class="hero-stat-num" data-target="12500">0</span><span class="stat-unit">+</span>
+          <div class="hero-stat-label">Farmers Supported</div>
+        </div>
+        <div class="hero-stat-card">
+          <i class="fas fa-map-marked-alt stat-icon"></i>
+          <span class="hero-stat-num" data-target="9">0</span><span class="stat-unit"></span>
+          <div class="hero-stat-label">Provinces Covered</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-wheel"></div>
+    </div>
+  </section>
+
+  <div class="glow-divider"></div>
+
+  <!-- PROBLEM -->
+  <section class="problem-section">
+    <div class="section-inner">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag"><i class="fas fa-exclamation-triangle"></i> The Problem</span>
+        <h2 class="section-title">The Hidden Crisis in <span>Sri Lankan Agriculture</span></h2>
+        <p class="section-sub" style="margin:0 auto 2.5rem">Farmers receive a fraction of what consumers pay. Middlemen dominate the supply chain, capturing 60–70% of the value while farmers struggle with poverty.</p>
+      </div>
+      <!-- Supply Chain -->
+      <div class="supply-chain reveal">
+        <div class="chain-node">
+          <div class="chain-icon-wrap green"><i class="fas fa-tractor"></i></div>
+          <div class="label">Farmer</div>
+          <div class="chain-price">Rs. 113</div>
+          <div class="tooltip">Farmer receives only Rs.113/kg — far below market value</div>
+        </div>
+        <div class="chain-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+        <div class="chain-node">
+          <div class="chain-icon-wrap blue"><i class="fas fa-truck"></i></div>
+          <div class="label">Collector</div>
+          <div class="chain-price">+25%</div>
+          <div class="tooltip">First collector adds 25% margin for transport & handling</div>
+        </div>
+        <div class="chain-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+        <div class="chain-node">
+          <div class="chain-icon-wrap purple"><i class="fas fa-warehouse"></i></div>
+          <div class="label">Wholesaler</div>
+          <div class="chain-price">+30%</div>
+          <div class="tooltip">Wholesaler marks up 30% for storage & distribution</div>
+        </div>
+        <div class="chain-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+        <div class="chain-node">
+          <div class="chain-icon-wrap orange"><i class="fas fa-store"></i></div>
+          <div class="label">Retailer</div>
+          <div class="chain-price">+20%</div>
+          <div class="tooltip">Retailer adds 20% margin for shopfront overhead</div>
+        </div>
+        <div class="chain-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+        <div class="chain-node consumer-node">
+          <div class="chain-icon-wrap red"><i class="fas fa-user"></i></div>
+          <div class="label">Consumer</div>
+          <div class="chain-price consumer-price">Rs. 208</div>
+          <div class="tooltip">Consumer pays Rs.208 — 83% more than the farmer receives!</div>
+        </div>
+      </div>
+      <!-- Price Gap Cards -->
+      <div class="price-gap-grid" style="margin-top:3rem">
+        <div class="price-gap-card reveal">
+          <div class="pgc-header">
+            <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400&q=70" alt="White Paddy" class="pgc-img">
+            <h4>White Paddy</h4>
+          </div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-tractor"></i> Farmer receives</span><span class="price-val farmer">Rs. 113/kg</span></div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-user"></i> Consumer pays</span><span class="price-val consumer">Rs. 208/kg</span></div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-arrow-up"></i> Price Gap</span><span class="price-val gap">+83%</span></div>
+          <div class="gap-bar"><div class="gap-fill" data-w="83"></div></div>
+        </div>
+        <div class="price-gap-card reveal reveal-delay-1">
+          <div class="pgc-header">
+            <img src="https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=400&q=70" alt="Cabbage" class="pgc-img">
+            <h4>Cabbage</h4>
+          </div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-tractor"></i> Farmer receives</span><span class="price-val farmer">Rs. 187/kg</span></div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-user"></i> Consumer pays</span><span class="price-val consumer">Rs. 396/kg</span></div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-arrow-up"></i> Price Gap</span><span class="price-val gap">+112%</span></div>
+          <div class="gap-bar"><div class="gap-fill" data-w="100"></div></div>
+        </div>
+        <div class="price-gap-card reveal reveal-delay-2">
+          <div class="pgc-header">
+            <img src="https://images.unsplash.com/photo-1592841200221-a6898f307baa?w=400&q=70" alt="Tomato" class="pgc-img">
+            <h4>Tomato</h4>
+          </div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-tractor"></i> Farmer receives</span><span class="price-val farmer">Rs. 241/kg</span></div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-user"></i> Consumer pays</span><span class="price-val consumer">Rs. 452/kg</span></div>
+          <div class="price-row"><span class="price-label"><i class="fas fa-arrow-up"></i> Price Gap</span><span class="price-val gap">+88%</span></div>
+          <div class="gap-bar"><div class="gap-fill" data-w="88"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="glow-divider"></div>
+
+  <!-- SOLUTION -->
+  <section>
+    <div class="section-inner">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag"><i class="fas fa-lightbulb"></i> Our Solution</span>
+        <h2 class="section-title">How FarmDirect <span>Solves the Problem</span></h2>
+        <p class="section-sub" style="margin:0 auto">We leverage technology to create a transparent, fair agricultural marketplace that empowers farmers and benefits consumers.</p>
+      </div>
+      <div class="solution-grid" style="margin-top:3rem">
+        <div class="solution-card reveal">
+          <div class="solution-icon"><i class="fas fa-store"></i></div>
+          <h3>Direct Marketplace</h3>
+          <p>Farmers sell directly to consumers and businesses, eliminating middlemen and maximizing profit retention for every harvest.</p>
+        </div>
+        <div class="solution-card reveal reveal-delay-1">
+          <div class="solution-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Market Intelligence</h3>
+          <p>Real-time price data, demand trends, and seasonal forecasts help farmers make informed decisions about what to grow and when to sell.</p>
+        </div>
+        <div class="solution-card reveal reveal-delay-2">
+          <div class="solution-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Digital Learning</h3>
+          <p>Step-by-step courses on Facebook marketing, WhatsApp Business, TikTok, and digital payments designed for farmers with basic smartphone skills.</p>
+        </div>
+        <div class="solution-card reveal reveal-delay-1">
+          <div class="solution-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3>Mobile Accessibility</h3>
+          <p>Fully mobile-optimized platform works on any smartphone with basic internet, ensuring even rural farmers can participate.</p>
+        </div>
+        <div class="solution-card reveal reveal-delay-2">
+          <div class="solution-icon"><i class="fas fa-balance-scale"></i></div>
+          <h3>Fair Pricing</h3>
+          <p>Transparent pricing algorithms and price history data ensure farmers receive fair value and buyers pay competitive prices.</p>
+        </div>
+        <div class="solution-card reveal reveal-delay-3">
+          <div class="solution-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Trust & Transparency</h3>
+          <p>Verified farmer profiles, organic certifications, ratings, and reviews build consumer trust and loyal customer bases.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="glow-divider"></div>
+
+  <!-- MARKETPLACE PREVIEW -->
+  <section style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem">
+        <div>
+          <span class="section-tag"><i class="fas fa-leaf"></i> Featured Products</span>
+          <h2 class="section-title" style="margin-bottom:0">Fresh From <span>Sri Lankan Farms</span></h2>
+        </div>
+        <button class="btn-primary" onclick="showPage('marketplace')"><i class="fas fa-store"></i> View All Products</button>
+      </div>
+      <div class="market-grid" id="home-products"></div>
+    </div>
+  </section>
+
+  <div class="glow-divider"></div>
+
+  <!-- RESEARCH INSIGHTS -->
+  <section class="insights-section">
+    <div class="section-inner">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag"><i class="fas fa-flask"></i> Research Data</span>
+        <h2 class="section-title">Insights Backed by <span>Science</span></h2>
+        <p class="section-sub" style="margin:0 auto 2rem">From the study: "Digital Marketplaces for Enhancing Farmer-Buyer Connectivity in Sri Lanka"</p>
+      </div>
+      <div class="insights-grid">
+        <div class="insight-card reveal">
+          <div class="insight-icon-wrap"><i class="fas fa-chart-line"></i></div>
+          <span class="insight-num counter" data-target="83">0</span><span class="insight-pct">%</span>
+          <div class="insight-label">Average price gap between farmgate and retail</div>
+        </div>
+        <div class="insight-card reveal reveal-delay-1">
+          <div class="insight-icon-wrap"><i class="fas fa-coins"></i></div>
+          <span class="insight-num counter" data-target="75">0</span><span class="insight-pct">%</span>
+          <div class="insight-label">Average income increase via digital platforms</div>
+        </div>
+        <div class="insight-card reveal reveal-delay-2">
+          <div class="insight-icon-wrap"><i class="fas fa-mobile-alt"></i></div>
+          <span class="insight-num counter" data-target="68">0</span><span class="insight-pct">%</span>
+          <div class="insight-label">Sri Lankan farmers own a smartphone</div>
+        </div>
+        <div class="insight-card reveal reveal-delay-3">
+          <div class="insight-icon-wrap"><i class="fas fa-recycle"></i></div>
+          <span class="insight-num counter" data-target="40">0</span><span class="insight-pct">%</span>
+          <div class="insight-label">Post-harvest loss reduction via direct sales</div>
+        </div>
+      </div>
+      <div class="progress-circles reveal" id="progress-circles">
+        <div class="circle-wrap">
+          <svg class="circle-svg" width="110" height="110" viewBox="0 0 110 110"><circle class="circle-bg" cx="55" cy="55" r="48"/><circle class="circle-fg" id="circ1" cx="55" cy="55" r="48"/></svg>
+          <div class="circle-val">83%</div><div class="circle-label">Price Gap</div>
+        </div>
+        <div class="circle-wrap">
+          <svg class="circle-svg" width="110" height="110" viewBox="0 0 110 110"><circle class="circle-bg" cx="55" cy="55" r="48"/><circle class="circle-fg" id="circ2" cx="55" cy="55" r="48"/></svg>
+          <div class="circle-val">75%</div><div class="circle-label">Income Growth</div>
+        </div>
+        <div class="circle-wrap">
+          <svg class="circle-svg" width="110" height="110" viewBox="0 0 110 110"><circle class="circle-bg" cx="55" cy="55" r="48"/><circle class="circle-fg" id="circ3" cx="55" cy="55" r="48"/></svg>
+          <div class="circle-val">68%</div><div class="circle-label">Smartphone Rate</div>
+        </div>
+        <div class="circle-wrap">
+          <svg class="circle-svg" width="110" height="110" viewBox="0 0 110 110"><circle class="circle-bg" cx="55" cy="55" r="48"/><circle class="circle-fg" id="circ4" cx="55" cy="55" r="48"/></svg>
+          <div class="circle-val">93%</div><div class="circle-label">Max Income Rise</div>
+        </div>
+        <div class="circle-wrap">
+          <svg class="circle-svg" width="110" height="110" viewBox="0 0 110 110"><circle class="circle-bg" cx="55" cy="55" r="48"/><circle class="circle-fg" id="circ5" cx="55" cy="55" r="48"/></svg>
+          <div class="circle-val">40%</div><div class="circle-label">Loss Reduction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="reveal" style="text-align:center">
+        <span class="section-tag"><i class="fas fa-star"></i> Success Stories</span>
+        <h2 class="section-title">Farmers Who <span>Changed Their Lives</span></h2>
+      </div>
+      <div class="testimonial-slider reveal" style="margin-top:2rem">
+        <div class="testimonial-track" id="testimonial-track">
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <i class="fas fa-quote-left testimonial-quote-icon"></i>
+              <p class="testimonial-text">By selling my tomatoes directly online through FarmDirect, I completely cut out the middlemen. My profits increased by 75% in just three months. I can now afford my children's school fees and improved our family home.</p>
+              <div class="testimonial-author">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=70" alt="Kumara Bandara" class="testimonial-avatar">
+                <div><div class="testimonial-name">Kumara Bandara</div><div class="testimonial-role">Vegetable Farmer, Matale District</div></div>
+              </div>
+              <div class="income-compare">
+                <div class="income-box"><div class="income-label">Before (Monthly)</div><div class="income-val">Rs. 28,000</div></div>
+                <div class="income-box after"><div class="income-label">After (Monthly)</div><div class="income-val-after">Rs. 49,000</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <i class="fas fa-quote-left testimonial-quote-icon"></i>
+              <p class="testimonial-text">I was afraid of technology, but the digital learning centre made it so simple. Now I use WhatsApp Business to take daily orders and Facebook to showcase my organic cabbages. My income has nearly doubled!</p>
+              <div class="testimonial-author">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=70" alt="Priya Wijesiri" class="testimonial-avatar">
+                <div><div class="testimonial-name">Priya Wijesiri</div><div class="testimonial-role">Organic Farmer, Nuwara Eliya</div></div>
+              </div>
+              <div class="income-compare">
+                <div class="income-box"><div class="income-label">Before (Monthly)</div><div class="income-val">Rs. 22,000</div></div>
+                <div class="income-box after"><div class="income-label">After (Monthly)</div><div class="income-val-after">Rs. 42,000</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <i class="fas fa-quote-left testimonial-quote-icon"></i>
+              <p class="testimonial-text">The market intelligence dashboard told me cinnamon prices were rising. I held my stock and sold at the peak. FarmDirect gave me information that only large traders had before — now I compete on equal ground.</p>
+              <div class="testimonial-author">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=70" alt="Nalini Fernando" class="testimonial-avatar">
+                <div><div class="testimonial-name">Nalini Fernando</div><div class="testimonial-role">Spice Farmer, Kurunegala</div></div>
+              </div>
+              <div class="income-compare">
+                <div class="income-box"><div class="income-label">Before (Monthly)</div><div class="income-val">Rs. 35,000</div></div>
+                <div class="income-box after"><div class="income-label">After (Monthly)</div><div class="income-val-after">Rs. 67,500</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn" onclick="slideTestimonial(-1)"><i class="fas fa-chevron-left"></i></button>
+          <div class="slider-dots">
+            <div class="slider-dot active" onclick="goToSlide(0)"></div>
+            <div class="slider-dot" onclick="goToSlide(1)"></div>
+            <div class="slider-dot" onclick="goToSlide(2)"></div>
+          </div>
+          <button class="slider-btn" onclick="slideTestimonial(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNING PREVIEW -->
+  <section>
+    <div class="section-inner">
+      <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem">
+        <div>
+          <span class="section-tag"><i class="fas fa-laptop"></i> Digital Skills</span>
+          <h2 class="section-title" style="margin-bottom:0">Learn to Sell <span>Digitally</span></h2>
+        </div>
+        <button class="btn-primary" onclick="showPage('learning')"><i class="fas fa-graduation-cap"></i> All Courses</button>
+      </div>
+      <div class="learning-grid">
+        <div class="learn-card reveal"><div class="learn-icon-wrap blue"><i class="fab fa-facebook"></i></div><div class="learn-title">Facebook Marketing</div><span class="learn-level level-beginner">Beginner</span><div class="learn-progress"><div class="learn-progress-fill" style="width:85%"></div></div></div>
+        <div class="learn-card reveal reveal-delay-1"><div class="learn-icon-wrap green"><i class="fab fa-whatsapp"></i></div><div class="learn-title">WhatsApp Business</div><span class="learn-level level-beginner">Beginner</span><div class="learn-progress"><div class="learn-progress-fill" style="width:70%"></div></div></div>
+        <div class="learn-card reveal reveal-delay-2"><div class="learn-icon-wrap dark"><i class="fab fa-tiktok"></i></div><div class="learn-title">TikTok Marketing</div><span class="learn-level level-intermediate">Intermediate</span><div class="learn-progress"><div class="learn-progress-fill" style="width:55%"></div></div></div>
+        <div class="learn-card reveal reveal-delay-3"><div class="learn-icon-wrap orange"><i class="fas fa-camera"></i></div><div class="learn-title">Product Photography</div><span class="learn-level level-intermediate">Intermediate</span><div class="learn-progress"><div class="learn-progress-fill" style="width:40%"></div></div></div>
+        <div class="learn-card reveal"><div class="learn-icon-wrap gold"><i class="fas fa-tags"></i></div><div class="learn-title">Smart Pricing</div><span class="learn-level level-advanced">Advanced</span><div class="learn-progress"><div class="learn-progress-fill" style="width:30%"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <div class="footer-logo"><i class="fas fa-seedling"></i> Farm<span>Direct</span></div>
+          <p>Empowering Sri Lankan farmers through digital transformation. Bridging the gap between farms and consumers for a fairer agricultural economy.</p>
+          <div class="footer-social">
+            <a href="#" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-btn" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('marketplace');return false;"><i class="fas fa-chevron-right fa-xs"></i> Marketplace</a></li>
+            <li><a href="#" onclick="showPage('analytics');return false;"><i class="fas fa-chevron-right fa-xs"></i> Price Analytics</a></li>
+            <li><a href="#" onclick="showPage('market');return false;"><i class="fas fa-chevron-right fa-xs"></i> Market Info</a></li>
+            <li><a href="#" onclick="showPage('learning');return false;"><i class="fas fa-chevron-right fa-xs"></i> Learning Center</a></li>
+            <li><a href="#" onclick="showPage('quiz');return false;"><i class="fas fa-chevron-right fa-xs"></i> Digital Quiz</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('government');return false;"><i class="fas fa-chevron-right fa-xs"></i> Gov. Programs</a></li>
+            <li><a href="#" onclick="showPage('contact');return false;"><i class="fas fa-chevron-right fa-xs"></i> Contact Us</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right fa-xs"></i> Help Center</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right fa-xs"></i> Farmer Guide</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right fa-xs"></i> Research Paper</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Newsletter</h4>
+          <p style="font-size:0.82rem;color:var(--text3);margin-bottom:0.8rem">Get weekly market prices &amp; farming tips</p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="your@email.com">
+            <button onclick="showToast('Subscribed successfully!')"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 FarmDirect</p>
+        
+      </div>
+    </div>
+  </footer>
+</div><!-- end page-home -->
+
+<!-- ======================================================
+     PAGE: MARKETPLACE
+     ====================================================== -->
+<div class="page" id="page-marketplace">
+  <div class="section-inner" style="padding:3rem 2rem 4rem">
+    <div class="marketplace-header">
+      <span class="section-tag"><i class="fas fa-store"></i> Marketplace</span>
+      <h2 class="section-title">Fresh Produce <span>Direct From Farmers</span></h2>
+      <p class="section-sub" style="margin:0 auto">Buy directly from certified Sri Lankan farmers at fair prices</p>
+    </div>
+    <div class="search-filter-bar">
+      <div class="search-input-wrap"><i class="fas fa-search si"></i><input type="text" id="mp-search" placeholder="Search products, farmers, districts..." oninput="filterProducts()"></div>
+      <select class="filter-select" id="mp-province" onchange="filterProducts()">
+        <option value="">All Provinces</option>
+        <option>Western</option><option>Central</option><option>Southern</option><option>North Western</option><option>North Central</option><option>Uva</option><option>Sabaragamuwa</option><option>Northern</option><option>Eastern</option>
+      </select>
+      <select class="filter-select" id="mp-sort" onchange="filterProducts()">
+        <option value="">Sort: Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="rating">Highest Rated</option>
+      </select>
+    </div>
+    <div class="cat-chips">
+      <div class="cat-chip active" onclick="setCategory('all',this)"><i class="fas fa-th"></i> All</div>
+      <div class="cat-chip" onclick="setCategory('vegetables',this)"><i class="fas fa-carrot"></i> Vegetables</div>
+      <div class="cat-chip" onclick="setCategory('fruits',this)"><i class="fas fa-apple-alt"></i> Fruits</div>
+      <div class="cat-chip" onclick="setCategory('rice',this)"><i class="fas fa-seedling"></i> Rice</div>
+      <div class="cat-chip" onclick="setCategory('spices',this)"><i class="fas fa-pepper-hot"></i> Spices</div>
+      <div class="cat-chip" onclick="setCategory('organic',this)"><i class="fas fa-leaf"></i> Organic Only</div>
+    </div>
+    <div class="marketplace-layout">
+      <div>
+        <div class="products-count" id="products-count">Showing 12 products</div>
+        <div class="market-grid" id="mp-grid"></div>
+      </div>
+      <div class="cart-sidebar">
+        <div class="cart-title"><span><i class="fas fa-shopping-cart"></i> Your Cart</span><span class="cart-badge" id="cart-count">0</span></div>
+        <div class="cart-items" id="cart-items">
+          <div class="cart-empty"><i class="fas fa-shopping-basket"></i><br>Your cart is empty<br><small>Add products to get started</small></div>
+        </div>
+        <div class="cart-total"><span>Total</span><span class="cart-total-val" id="cart-total-val">Rs. 0</span></div>
+        <button class="btn-checkout" onclick="openCheckout()"><i class="fas fa-credit-card"></i> Checkout</button>
+      </div>
+    </div>
+  </div>
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fas fa-check-circle" style="color:var(--leaf-green)"></i> Checkout</h3>
+        <button class="modal-close" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-form">
+        <label>Full Name</label><input type="text" placeholder="Enter your name">
+        <label>Phone Number</label><input type="tel" placeholder="+94 7X XXX XXXX">
+        <label>Delivery Address</label><input type="text" placeholder="Street, City, District">
+        <label>Payment Method</label>
+        <select class="modal-select"><option>Cash on Delivery</option><option>Dialog Pay</option><option>Bank Transfer</option><option>Card Payment</option></select>
+      </div>
+      <div class="modal-total-row"><span>Order Total</span><span id="modal-total" class="modal-total-val">Rs. 0</span></div>
+      <button class="btn-checkout" onclick="placeOrder()"><i class="fas fa-check-circle"></i> Place Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE: ANALYTICS
+     ====================================================== -->
+<div class="page" id="page-analytics">
+  <div class="section-inner" style="padding:3rem 2rem 4rem">
+    <span class="section-tag"><i class="fas fa-chart-bar"></i> Analytics Dashboard</span>
+    <h2 class="section-title">Price Gap <span>Intelligence</span></h2>
+    <p class="section-sub">Data-driven insights from Sri Lankan agricultural markets</p>
+    <div class="filters-bar">
+      <label>Filters:</label>
+      <select id="f-commodity"><option value="all">All Commodities</option><option>Tomato</option><option>Cabbage</option><option>Rice</option><option>Cinnamon</option></select>
+      <select id="f-province"><option value="all">All Provinces</option><option>Western</option><option>Central</option><option>Southern</option></select>
+      <select id="f-month"><option value="all">All Months</option><option>January</option><option>February</option><option>March</option><option>April</option></select>
+      <button class="btn-calc" onclick="showToast('Dashboard refreshed!')"><i class="fas fa-sync-alt"></i> Apply</button>
+    </div>
+    <div class="dash-kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-chart-line"></i></div><span class="kpi-val an-counter" data-target="83">0</span><span class="kpi-unit">%</span><div class="kpi-label">Avg. Price Gap</div><div class="kpi-trend"><i class="fas fa-arrow-up"></i> 3% vs last year</div></div>
+      <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-coins"></i></div><span class="kpi-val an-counter" data-target="75">0</span><span class="kpi-unit">%</span><div class="kpi-label">Income Increase</div><div class="kpi-trend"><i class="fas fa-arrow-up"></i> 12% via digital</div></div>
+      <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-tractor"></i></div><span class="kpi-val an-counter" data-target="24">0</span><span class="kpi-unit">K</span><div class="kpi-label">Active Farmers</div><div class="kpi-trend"><i class="fas fa-arrow-up"></i> 8% this month</div></div>
+      <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-recycle"></i></div><span class="kpi-val an-counter" data-target="40">0</span><span class="kpi-unit">%</span><div class="kpi-label">Loss Reduction</div><div class="kpi-trend"><i class="fas fa-arrow-down"></i> post-harvest waste</div></div>
+      <div class="kpi-card"><div class="kpi-icon-wrap"><i class="fas fa-map-marked-alt"></i></div><span class="kpi-val an-counter" data-target="9">0</span><span class="kpi-unit"></span><div class="kpi-label">Provinces Covered</div><div class="kpi-trend"><i class="fas fa-check"></i> Full island coverage</div></div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h4><i class="fas fa-chart-bar"></i> Farmgate vs Retail Price (Rs/kg)</h4>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot g"></div>Farmer Price</div>
+          <div class="legend-item"><div class="legend-dot o"></div>Consumer Price</div>
+        </div>
+        <div class="bar-chart" id="bar-chart"></div>
+      </div>
+      <div class="chart-card">
+        <h4><i class="fas fa-chart-pie"></i> Income Distribution After FarmDirect</h4>
+        <div class="pie-wrap">
+          <div class="pie-svg-wrap">
+            <svg width="160" height="160" viewBox="0 0 160 160">
+              <circle cx="80" cy="80" r="60" fill="none" stroke="var(--deep-green)" stroke-width="30" stroke-dasharray="377 0" opacity="0.3"/>
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#43A047" stroke-width="30" stroke-dasharray="0 377" id="pie1" style="transform-origin:80px 80px" stroke-linecap="round"/>
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#FBC02D" stroke-width="30" stroke-dasharray="0 377" id="pie2" style="transform-origin:80px 80px" stroke-linecap="round"/>
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#FB8C00" stroke-width="30" stroke-dasharray="0 377" id="pie3" style="transform-origin:80px 80px" stroke-linecap="round"/>
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#555" stroke-width="30" stroke-dasharray="0 377" id="pie4" style="transform-origin:80px 80px" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="pie-legend">
+            <div class="pie-legend-item"><div class="pie-dot" style="background:#43A047"></div>Farmer Income (65%)</div>
+            <div class="pie-legend-item"><div class="pie-dot" style="background:#FBC02D"></div>Platform Fee (10%)</div>
+            <div class="pie-legend-item"><div class="pie-dot" style="background:#FB8C00"></div>Logistics (15%)</div>
+            <div class="pie-legend-item"><div class="pie-dot" style="background:#555"></div>Other Costs (10%)</div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h4><i class="fas fa-chart-area"></i> Monthly Income Trend — Digital Farmers</h4>
+        <div class="line-chart-wrap">
+          <svg id="line-svg" viewBox="0 0 400 150" preserveAspectRatio="none" style="width:100%;height:150px;overflow:visible">
+            <path id="line-area" fill="url(#areaGrad)" opacity="0.35"/>
+            <path id="line-path" fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1000" stroke-dashoffset="1000"/>
+          </svg>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.63rem;color:var(--text3);margin-top:0.3rem"><span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span></div>
+      </div>
+      <div class="chart-card">
+        <h4><i class="fas fa-th"></i> Province Price Heatmap (Vegetables)</h4>
+        <div class="heatmap-grid" id="heatmap"></div>
+      </div>
+    </div>
+    <div class="calc-card">
+      <h3><i class="fas fa-calculator"></i> Farmer Profit Calculator</h3>
+      <div class="calc-form">
+        <div class="calc-group"><label>Crop Type</label><select id="calc-crop"><option value="tomato">Tomato</option><option value="cabbage">Cabbage</option><option value="rice">Rice</option><option value="cinnamon">Cinnamon</option><option value="carrot">Carrot</option></select></div>
+        <div class="calc-group"><label>Quantity (kg)</label><input type="number" id="calc-qty" value="500" min="1"></div>
+        <div class="calc-group"><label>Selling Method</label><select id="calc-method"><option value="traditional">Traditional (via middlemen)</option><option value="digital">Digital (FarmDirect)</option></select></div>
+        <div style="display:flex;align-items:flex-end"><button class="btn-calc" onclick="calculateProfit()"><i class="fas fa-calculator"></i> Calculate</button></div>
+      </div>
+      <div class="calc-results" id="calc-results">
+        <div class="calc-result-item"><div class="calc-result-label">Traditional Income</div><div class="calc-result-val" id="r-trad">—</div></div>
+        <div class="calc-result-item"><div class="calc-result-label">Digital Income</div><div class="calc-result-val" id="r-digital">—</div></div>
+        <div class="calc-result-item highlight"><div class="calc-result-label"><i class="fas fa-coins"></i> Extra Profit</div><div class="calc-result-val" id="r-extra">—</div></div>
+        <div class="calc-result-item highlight"><div class="calc-result-label"><i class="fas fa-chart-line"></i> % Increase</div><div class="calc-result-val" id="r-pct">—</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE: LEARNING CENTER
+     ====================================================== -->
+<div class="page" id="page-learning">
+  <div class="section-inner" style="padding:3rem 2rem 4rem">
+    <span class="section-tag"><i class="fas fa-graduation-cap"></i> Learning Center</span>
+    <h2 class="section-title">Digital Skills for <span>Every Farmer</span></h2>
+    <p class="section-sub">Master digital tools and grow your farming business online</p>
+    <div class="learning-tabs">
+      <div class="ltab active" onclick="setLearningTab('all',this)">All Courses</div>
+      <div class="ltab" onclick="setLearningTab('social',this)"><i class="fas fa-share-alt"></i> Social Media</div>
+      <div class="ltab" onclick="setLearningTab('business',this)"><i class="fas fa-briefcase"></i> Business</div>
+      <div class="ltab" onclick="setLearningTab('tech',this)"><i class="fas fa-laptop-code"></i> Technology</div>
+      <div class="ltab" onclick="setLearningTab('photography',this)"><i class="fas fa-camera"></i> Photography</div>
+    </div>
+    <div class="course-grid" id="course-grid"></div>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE: MARKET INFO
+     ====================================================== -->
+<div class="page" id="page-market">
+  <div class="section-inner" style="padding:3rem 2rem 4rem">
+    <span class="section-tag"><i class="fas fa-chart-line"></i> Market Intelligence</span>
+    <h2 class="section-title">Live Market <span>Information</span></h2>
+    <p class="section-sub">Real-time prices, demand trends, and seasonal forecasts for Sri Lankan crops</p>
+    <h3 class="sub-heading"><i class="fas fa-broadcast-tower"></i> Today's Prices</h3>
+    <div class="market-info-grid" id="price-tickers"></div>
+    <div style="margin-top:2rem">
+      <h3 class="sub-heading"><i class="fas fa-bell"></i> Smart Alerts</h3>
+      <div class="alert-cards">
+        <div class="alert-card"><div class="alert-icon"><i class="fab fa-whatsapp"></i></div><div class="alert-text"><strong>WhatsApp Alert:</strong> Tomato price increased 15% in Colombo. Best time to sell!</div></div>
+        <div class="alert-card whatsapp"><div class="alert-icon"><i class="fas fa-sms"></i></div><div class="alert-text"><strong>SMS Alert:</strong> Heavy rain forecast for Nuwara Eliya next 3 days. Harvest early.</div></div>
+        <div class="alert-card sms"><div class="alert-icon"><i class="fas fa-star"></i></div><div class="alert-text"><strong>Price Alert:</strong> Cinnamon export demand high. Consider holding stock for better price.</div></div>
+        <div class="alert-card warn"><div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="alert-text"><strong>Warning:</strong> Cabbage oversupply in Central Province. Consider alternatives next season.</div></div>
+      </div>
+    </div>
+    <div class="market-forecast" style="margin-top:2rem">
+      <h3 class="sub-heading"><i class="fas fa-calendar-alt"></i> Seasonal Forecast — Next 30 Days</h3>
+      <div class="forecast-grid" id="forecast-grid"></div>
+    </div>
+    <div style="margin-top:2rem">
+      <h3 class="sub-heading"><i class="fas fa-cloud-sun"></i> Weather Outlook — Key Districts</h3>
+      <div class="weather-cards" id="weather-cards"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE: QUIZ
+     ====================================================== -->
+<div class="page" id="page-quiz">
+  <div class="section-inner" style="padding:3rem 2rem 4rem">
+    <div class="quiz-wrap">
+      <div class="quiz-header">
+        <span class="section-tag"><i class="fas fa-clipboard-check"></i> Digital Readiness Quiz</span>
+        <h2 class="section-title">Test Your <span>Digital Readiness</span></h2>
+        <p class="section-sub">Find out how ready you are for digital farming and get personalized recommendations</p>
+      </div>
+      <div class="quiz-progress-wrap"><div class="quiz-progress-fill" id="quiz-progress" style="width:0%"></div></div>
+      <div id="quiz-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE: GOVERNMENT
+     ====================================================== -->
+<div class="page" id="page-government">
+  <div class="section-inner" style="padding:3rem 2rem 4rem">
+    <span class="section-tag"><i class="fas fa-landmark"></i> Government Support</span>
+    <h2 class="section-title">Support Programs for <span>Sri Lankan Farmers</span></h2>
+    <p class="section-sub">Access government subsidies, ICT training, and rural support programs</p>
+    <div class="gov-programs" id="gov-programs"></div>
+    <h3 class="sub-heading" style="margin-top:2rem"><i class="fas fa-hand-holding-usd"></i> Available Subsidies &amp; Grants</h3>
+    <div class="subsidy-grid" id="subsidy-grid"></div>
+  </div>
+</div>
+
+<!-- ======================================================
+     PAGE: CONTACT
+     ====================================================== -->
+<div class="page" id="page-contact">
+  <div class="section-inner" style="padding:3rem 2rem 4rem">
+    <span class="section-tag"><i class="fas fa-headset"></i> Contact &amp; Community</span>
+    <h2 class="section-title">Get in <span>Touch</span></h2>
+    <p class="section-sub">We're here to support Sri Lankan farmers every step of the way</p>
+    <div class="contact-layout">
+      <div>
+        <div class="contact-form-card">
+          <h3><i class="fas fa-envelope-open-text"></i> Send us a Message</h3>
+          <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your full name"></div>
+          <div class="form-group"><label>Email / Phone</label><input type="text" placeholder="email@example.com or +94 7X XXX XXXX"></div>
+          <div class="form-group"><label>District</label><select><option>Select your district</option><option>Colombo</option><option>Kandy</option><option>Matale</option><option>Nuwara Eliya</option><option>Galle</option><option>Matara</option><option>Hambantota</option><option>Jaffna</option><option>Batticaloa</option><option>Other</option></select></div>
+          <div class="form-group"><label>Topic</label><select><option>General Inquiry</option><option>Technical Support</option><option>Marketplace Help</option><option>Research Collaboration</option><option>Partnership</option></select></div>
+          <div class="form-group"><label>Message</label><textarea placeholder="Tell us how we can help you..."></textarea></div>
+          <button class="btn-submit" onclick="showToast('Message sent! We will reply within 24 hours.')"><i class="fas fa-paper-plane"></i> Send Message</button>
+        </div>
+      </div>
+      <div class="contact-info-col">
+        <div class="contact-info-item"><div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div><div class="contact-info-text"><h4>Address</h4><p>University of Sri Jayewardenepura<br>Faculty of Computing, Nugegoda</p></div></div>
+        <div class="contact-info-item"><div class="contact-info-icon"><i class="fas fa-phone-alt"></i></div><div class="contact-info-text"><h4>Phone</h4><p>+94 11 2 758 000<br>Hotline: 1919 (Farmer Helpline)</p></div></div>
+        <div class="contact-info-item"><div class="contact-info-icon"><i class="fas fa-envelope"></i></div><div class="contact-info-text"><h4>Email</h4><p>info@farmdirect.lk<br>support@farmdirect.lk</p></div></div>
+        <div class="contact-info-item"><div class="contact-info-icon"><i class="fab fa-whatsapp"></i></div><div class="contact-info-text"><h4>WhatsApp Support</h4><p>+94 77 123 4567<br>Mon–Sat, 7am–7pm</p></div></div>
+        <div style="width:100%;margin-top:1rem">
+          <h3 class="sub-heading"><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
+          <div class="faq-list" id="faq-list"></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:3rem">
+      <h3 class="sub-heading"><i class="fas fa-users"></i> Farmer Community</h3>
+      <p style="font-size:0.85rem;color:var(--text3);margin-bottom:1rem">Connect with fellow farmers, share experiences, and learn from each other</p>
+      <div class="community-grid" id="community-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE CHAT -->
+<div class="live-chat">
+  <button class="chat-bubble-btn" onclick="toggleChat()" title="Live Support">
+    <i class="fas fa-comments"></i>
+  </button>
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-head">
+      <div class="c-av"><i class="fas fa-robot"></i></div>
+      <div class="chat-head-info"><h4>FarmDirect Support</h4><p><i class="fas fa-circle" style="color:#4caf50;font-size:0.5rem"></i> Online — Usually replies instantly</p></div>
+      <button onclick="toggleChat()" class="chat-close-btn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chat-messages" id="chat-msgs">
+      <div class="chat-msg"><div class="chat-bubble-msg">Hello! Welcome to FarmDirect. How can I help you today?</div></div>
+      <div class="chat-msg"><div class="chat-bubble-msg">Ask me about marketplace, prices, or digital farming tips!</div></div>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chat-in" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendChat()">
+      <button class="chat-send" onclick="sendChat()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
